@@ -4,6 +4,19 @@
 pipenv install
 ```
 
-Copy the .env_template file and rename it .env
+## Enrollees
 
-Enter in the connection strings and other environment variables specified and save the file
+1. From the Sharepoint folder grab the new files per year and put it in the "data/enrollees_extract" Folder
+
+2. Run 
+```
+pipenv run enrollees
+```
+
+or, in the appropriate shell environment with the right python interpreter
+```
+python clean_enrollees_extract.py
+```
+
+3. The cleaned up csv will be outputted as "data/enrollees_extract.csv"
+4. Upload the output to the sharepoint site
