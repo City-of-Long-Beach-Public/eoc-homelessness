@@ -17,6 +17,8 @@ for filename in os.listdir(data_folder):
 
 clean_df = raw_df
 
+# Change Column Names
+
 clean_df = clean_df.rename(
     columns={
         "Unique Identifier": "Clients Unique Identifier",
@@ -41,9 +43,57 @@ clean_df = clean_df.rename(
     errors="raise",
 )
 
+# Add Calculations
 
-raw_df.info()
+use_ethnicity_when = clean_df["Clients Ethnicity"] != "Non-Hispanic/Non-Latin(a)(o)(x)"
+clean_df["Clients Race / Ethnicity"] = clean_df["Clients Ethnicity"].where(
+    cond=use_ethnicity_when, other=clean_df["Clients Race"]
+)
+
+clean_df["Program Sites Lat"] = clean_df["Program Sites Full Geolocation"].replace(
+    to_replace=",.+", value="", regex=True
+)
+clean_df["Program Sites Long"] = clean_df["Program Sites Full Geolocation"].replace(
+    to_replace=".+,", value="", regex=True
+)
+clean_df["Service Lat"] = clean_df["Service Geolocation"].replace(
+    to_replace=",.+", value="", regex=True
+)
+clean_df["Service Long"] = clean_df["Service Geolocation"].replace(
+    to_replace=".+,", value="", regex=True
+)
+
+
+def bin_type_code(code):
+    interim_set = {"Emergency Shelter", "Transitional Housing", "Safe Haven"}
+    permanent_set = {
+        "PH - Rapid Re-Housing",
+        "PH - Housing Only",
+        "PH - Housing with Services (no disability required for entry)",
+        "PH - Permanent Supportive Housing (disability required for entry)",
+    }
+    services_set = {
+        "Street Outreach",
+        "Coordinated Entry",
+        "Homelessness Prevention",
+        "Other",
+    }
+
+    if code in interim_set:
+        return "Interim Housing"
+    if code in permanent_set:
+        return "Permanent Housing"
+    if code in services_set:
+        return "Services"
+
+
+clean_df["Programs Project Type Category"] = clean_df[
+    "Programs Project Type Code"
+].transform(bin_type_code)
+
+
+# raw_df.info()
 clean_df.info()
-raw_df.to_csv(
+clean_df.to_csv(
     os.path.join(os.path.dirname(data_folder), "enrollees_extract.csv"), index=False
 )
