@@ -14,4 +14,4 @@ python_version = "3.9"
 
 [scripts]
 lint = "black ."
-clean_enrollees_extract = "python clean_enrollees_extract.py"
+enrollees = "python clean_enrollees_extract.py"
