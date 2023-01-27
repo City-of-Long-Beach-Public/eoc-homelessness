@@ -76,6 +76,7 @@ def bin_type_code(code):
         "Street Outreach",
         "Coordinated Entry",
         "Homelessness Prevention",
+        "Services Only",
         "Other",
     }
 
