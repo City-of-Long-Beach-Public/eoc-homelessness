@@ -45,9 +45,18 @@ clean_df = clean_df.rename(
 
 # Add Calculations
 
-use_ethnicity_when = clean_df["Clients Ethnicity"] != "Non-Hispanic/Non-Latin(a)(o)(x)"
-clean_df["Clients Race / Ethnicity"] = clean_df["Clients Ethnicity"].where(
-    cond=use_ethnicity_when, other=clean_df["Clients Race"]
+
+def combine_race_ethnicity(row):
+    out = row["Clients Race"]
+    if row["Black, African American, or African"] == "Yes":
+        out = "Black, African American, or African"
+    elif row["Clients Ethnicity"] == "Hispanic/Non-Latin(a)(o)(x)":
+        out = "Hispanic/Non-Latin(a)(o)(x)"
+    return out
+
+
+clean_df["Clients Race / Ethnicity"] = clean_df.apply(
+    combine_race_ethnicity, axis="columns"
 )
 
 clean_df["Program Sites Lat"] = clean_df["Program Sites Full Geolocation"].replace(
