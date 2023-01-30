@@ -50,8 +50,8 @@ def combine_race_ethnicity(row):
     out = row["Clients Race"]
     if row["Black, African American, or African"] == "Yes":
         out = "Black, African American, or African"
-    elif row["Clients Ethnicity"] == "Hispanic/Non-Latin(a)(o)(x)":
-        out = "Hispanic/Non-Latin(a)(o)(x)"
+    elif row["Clients Ethnicity"] == "Hispanic/Latin(a)(o)(x)":
+        out = "Hispanic/Latin(a)(o)(x)"
     return out
 
 
