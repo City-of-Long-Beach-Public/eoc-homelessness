@@ -33,3 +33,10 @@ afro_latino = df.query(
 )
 afro_latino.info()
 print(pd.unique(afro_latino["Clients Race / Ethnicity"]))
+
+# df[df["Programs Project Type Category"] == "Permanent Housing"]["Services Name"].value_counts().to_csv("./data/perm_counts.csv")
+
+# df[df["Programs Project Type Category"] == "Interim Housing"]["Services Name"].value_counts().to_csv("./data/inter_counts.csv")
+
+# df[df["Programs Project Type Category"] == "Services"]["Services Name"].value_counts().to_csv("./data/services_counts.csv")
+
