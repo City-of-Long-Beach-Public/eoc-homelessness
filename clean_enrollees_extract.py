@@ -45,7 +45,7 @@ clean_df = clean_df.rename(
 
 # Drop PII
 
-clean_df.drop(columns=["Date of Birth Date"], errors="ignore")
+clean_df = clean_df.drop(columns=["Date of Birth Date"], errors="ignore")
 
 # Add Calculations
 
