@@ -43,6 +43,10 @@ clean_df = clean_df.rename(
     errors="raise",
 )
 
+# Drop PII
+
+clean_df.drop(columns=["Date of Birth Date"], errors="ignore")
+
 # Add Calculations
 
 
@@ -52,6 +56,9 @@ def combine_race_ethnicity(row):
         out = "Black, African American, or African"
     elif row["Clients Ethnicity"] == "Hispanic/Latin(a)(o)(x)":
         out = "Hispanic/Latin(a)(o)(x)"
+
+    if out in {"Client doesn't know", "Client refused", "Data not collected"}:
+        out = "Unknown"
     return out
 
 
