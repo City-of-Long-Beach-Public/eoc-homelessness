@@ -50,20 +50,61 @@ clean_df = clean_df.drop(columns=["Date of Birth Date"], errors="ignore")
 # Add Calculations
 
 
-def combine_race_ethnicity(row):
+def clean_race(row):
     out = row["Clients Race"]
     if row["Black, African American, or African"] == "Yes":
         out = "Black, African American, or African"
-    elif row["Clients Ethnicity"] == "Hispanic/Latin(a)(o)(x)":
-        out = "Hispanic/Latin(a)(o)(x)"
-
     if out in {"Client doesn't know", "Client refused", "Data not collected"}:
         out = "Unknown"
     return out
 
 
+clean_df["Clients Race Cleaned"] = clean_df.apply(clean_race, axis="columns")
+
+
+def combine_race_ethnicity(row):
+    out = row["Clients Race Cleaned"]
+
+    if (row["Clients Ethnicity"] == "Hispanic/Latin(a)(o)(x)") & (
+        out != "Black, African American, or African"
+    ):
+        out = "Hispanic/Latin(a)(o)(x)"
+    return out
+
+
 clean_df["Clients Race / Ethnicity"] = clean_df.apply(
     combine_race_ethnicity, axis="columns"
+)
+
+
+def clean_gender(row):
+    other_set = {
+        "Questioning",
+        "Transgender",
+        "A gender other than singularly female or male (e.g., non-binary, genderfluid, agender, culturally specific gender)",
+    }
+    unknown_set = {"Client doesn't know", "Client refused", "Data not collected"}
+    out = row["Clients Gender"]
+    if out in other_set:
+        out = "Other"
+    if out in unknown_set:
+        out = "Unknown"
+    return out
+
+
+clean_df["Clients Gender Cleaned"] = clean_df.apply(clean_gender, axis="columns")
+
+
+def clean_veteran(row):
+    unknown_set = {"Client doesn't know", "Client refused", "Data not collected"}
+    out = row["Clients Veteran Status"]
+    if (out in unknown_set) | (pd.isna(out)):
+        out = "Unknown"
+    return out
+
+
+clean_df["Clients Veteran Status Cleaned"] = clean_df.apply(
+    clean_veteran, axis="columns"
 )
 
 clean_df["Program Sites Lat"] = clean_df["Program Sites Full Geolocation"].replace(
