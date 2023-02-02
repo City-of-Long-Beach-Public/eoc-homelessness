@@ -98,7 +98,8 @@ def determine_outcomes(row):
     return out
 
 
-def bin_type_code(code):
+def bin_type_code(row):
+    code = row["Programs Project Type Code"]
     interim_set = {"Emergency Shelter", "Transitional Housing", "Safe Haven"}
     permanent_set = {
         "PH - Rapid Re-Housing",
@@ -120,3 +121,18 @@ def bin_type_code(code):
         return "Permanent Housing"
     if code in services_set:
         return "Services"
+
+
+def determine_program(row):
+    program_set = {
+        "Housing & Shelter Services",
+        "Housing/Shelter Services",
+        "Shelter Services",
+        "Transitional Housing/Shelter",
+        "Housing Services",
+    }
+    out = row["Services Name"] in program_set
+
+    if pd.isna(row["Services Name"]):
+        out = True
+    return out

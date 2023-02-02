@@ -67,6 +67,8 @@ clean_df["Clients Veteran Status Cleaned"] = clean_df.apply(
     utils.clean_veteran, axis="columns"
 )
 
+clean_df["is Program Event"] = clean_df.apply(utils.determine_program, axis="columns")
+
 
 clean_df["Program Outcome"] = clean_df.apply(utils.determine_outcomes, axis="columns")
 
@@ -84,9 +86,9 @@ clean_df["Service Long"] = clean_df["Service Geolocation"].replace(
 )
 
 
-clean_df["Programs Project Type Category"] = clean_df[
-    "Programs Project Type Code"
-].transform(utils.bin_type_code)
+clean_df["Programs Project Type Category"] = clean_df.apply(
+    utils.bin_type_code, axis="columns"
+)
 
 
 # raw_df.info()
