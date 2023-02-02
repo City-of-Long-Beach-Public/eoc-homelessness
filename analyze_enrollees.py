@@ -32,12 +32,23 @@ print(pd.unique(safe_haven["Services Name"]))
 afro_latino = df.query(
     "`Clients Ethnicity` == 'Hispanic/Latin(a)(o)(x)' & `Clients Race` == 'Black, African American, or African'"
 )
+
+white_latino = df.query(
+    "`Clients Ethnicity` == 'Hispanic/Latin(a)(o)(x)' & `Clients Race` == 'White'"
+)
+
 # afro_latino.info()
 # Should be 'Black, African American, or African'
 print(pd.unique(afro_latino["Clients Race / Ethnicity"]))
 
 # Should be 'Black, African American, or African'
 print(pd.unique(afro_latino["Clients Race Cleaned"]))
+
+# Should be 'Hispanic/Latin(a)(o)(x)'
+print(pd.unique(white_latino["Clients Race / Ethnicity"]))
+
+# Should be 'White'
+print(pd.unique(white_latino["Clients Race Cleaned"]))
 
 # Should only have 4 groups Male, Female, Other, Unknown
 print(pd.unique(df["Clients Gender Cleaned"]))
