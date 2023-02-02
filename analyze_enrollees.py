@@ -45,6 +45,9 @@ print(pd.unique(df["Clients Gender Cleaned"]))
 # Should only have 3 groups Yes, No, Unknown
 print(pd.unique(df["Clients Veteran Status Cleaned"]))
 
+# Should only have 5 groups Positive, Negative, Permanent, Temporary, Exclude
+print(pd.unique(df["Program Outcome"]))
+
 # df[df["Programs Project Type Category"] == "Permanent Housing"]["Services Name"].value_counts().to_csv("./data/perm_counts.csv")
 
 # df[df["Programs Project Type Category"] == "Interim Housing"]["Services Name"].value_counts().to_csv("./data/inter_counts.csv")

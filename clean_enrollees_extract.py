@@ -107,6 +107,50 @@ clean_df["Clients Veteran Status Cleaned"] = clean_df.apply(
     clean_veteran, axis="columns"
 )
 
+def determine_outcomes(row):
+    exclude_non_street_set = {"Foster care home or foster care group home", "Long-term care facility or nursing home"}
+    exclude_if_street_set = {"Hospital or other residential non-psychiatric medical facility", "Residential project or halfway house with no homeless criteria"}
+    exclude_in_all_set = {"Deceased"}
+    negative_for_street_and_temp = {"Place not meant for human habitation", "Jail, prison or juvenile detention facility"}
+
+    destination = row["Update/Exit Screen Destination"]
+    destination_category = row["Update/Exit Screen Destination Category"]
+    out = ""
+
+    if destination in exclude_in_all_set:
+        out = "Exclude"
+    if row["Programs Project Type Code"] == "Street Outreach":
+        if destination in exclude_if_street_set:
+            out = "Exclude"
+    elif destination in exclude_non_street_set:
+        out = "Exclude"
+    
+    if out != "Exclude":
+        if row["Programs Project Type Code"] == "Street Outreach":
+            if destination_category == "Permanent Housing Situations":
+                out = "Positive"
+            elif destination_category == "Other":
+                out = "Negative"
+            elif destination in negative_for_street_and_temp:
+                out = "Negative"
+            else:
+                out = "Positive"
+
+
+        else:
+            if destination_category == "Permanent Housing Situations":
+                out = "Permanent"
+            else:
+                out = "Temporary"
+    if not pd.isna(row["Housing Move-in Date"]):
+        out = "Permanent"
+    return out
+
+
+clean_df["Program Outcome"] = clean_df.apply(
+    determine_outcomes, axis="columns"
+)
+
 clean_df["Program Sites Lat"] = clean_df["Program Sites Full Geolocation"].replace(
     to_replace=",.+", value="", regex=True
 )
