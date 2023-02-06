@@ -73,7 +73,9 @@ def hud_performance_outcomes(row):
 
     if out != "Exclude":
         if row["Programs Project Type Code"] == "Street Outreach":
-            if destination_category == "Permanent Housing Situations":
+            if pd.isna(destination_category):
+                out = "Negative"
+            elif destination_category == "Permanent Housing Situations":
                 out = "Positive"
             elif destination_category == "Other":
                 out = "Negative"
@@ -83,7 +85,9 @@ def hud_performance_outcomes(row):
                 out = "Positive"
 
         else:
-            if destination_category == "Permanent Housing Situations":
+            if pd.isna(destination_category):
+                out = "Temporary"
+            elif destination_category == "Permanent Housing Situations":
                 out = "Permanent"
             else:
                 out = "Temporary"

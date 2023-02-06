@@ -2,18 +2,26 @@ import os
 import pandas as pd
 
 import utils
+import json
+
 
 data_folder = "./data/enrollees_extract"
 
+raw_requirements_filepath =  os.path.abspath(os.path.join(data_folder, "raw_extract_requirements.json"))
+with open(raw_requirements_filepath, "r") as raw_requirements_file:
+    raw_requirements = json.load(raw_requirements_file)
+
+
 raw_df = pd.DataFrame()
 for filename in os.listdir(data_folder):
-    if filename != ".gitignore":
+    if "HSB Program Enrollees" in filename:
         filepath = os.path.abspath(os.path.join(data_folder, filename))
 
         parts_df = pd.read_csv(
             filepath,
             index_col=0,
-            parse_dates=["Project Start Date", "Exit Date Filter Date"],
+            dtype=raw_requirements["types"],
+            parse_dates=raw_requirements["date_columns"],
         )
         raw_df = pd.concat([raw_df, parts_df], ignore_index=True)
 
@@ -22,26 +30,7 @@ clean_df = raw_df
 # Change Column Names
 
 clean_df = clean_df.rename(
-    columns={
-        "Unique Identifier": "Clients Unique Identifier",
-        "Project Start Date": "Enrollments Project Start Date",
-        "Project Type Code": "Programs Project Type Code",
-        "Full Name": "Programs Full Name",
-        "Exit Date Filter Date": "Enrollments Exit Date Filter Date",
-        "Destination": "Update/Exit Screen Destination",
-        "Destination Category": "Update/Exit Screen Destination Category",
-        "Days in Project": "Enrollments Days in Project",
-        "Current Age": "Clients Current Age",
-        "Ethnicity": "Clients Ethnicity",
-        "Race": "Clients Race",
-        "Veteran Status": "Clients Veteran Status",
-        "Name": "Services Name",
-        "Chronically Homeless at Project Start - Individual": "Entry Screen Chronically Homeless at Project Start - Individual",
-        "Age at Project Start": "Entry Screen Age at Project Start",
-        "Gender": "Clients Gender",
-        "Full Geolocation": "Program Sites Full Geolocation",
-        "Full Geolocation.1": "Service Geolocation",
-    },
+    columns=raw_requirements["rename"],
     errors="raise",
 )
 
