@@ -3,8 +3,6 @@ import pandas as pd
 
 data_file = "./data/enrollees_extract.csv"
 
-raw_df = pd.DataFrame()
-
 filepath = os.path.abspath(data_file)
 
 df = pd.read_csv(
@@ -60,12 +58,15 @@ print(pd.unique(df["Clients Veteran Status Cleaned"]))
 print(pd.unique(df["Program Outcome"]))
 
 # Should just be logical list
-print(pd.unique(df["is Program Event"]))
+print(pd.unique(df["is Service Event"]))
 
 # Should only be interim, permanent, and services
 print(pd.unique(df["Programs Project Type Category"]))
 
 
+blank_service_names = df[df["Services Name"].isna()]
+
+print(blank_service_names)
 # df[df["Programs Project Type Category"] == "Permanent Housing"]["Services Name"].value_counts().to_csv("./data/perm_counts.csv")
 
 # df[df["Programs Project Type Category"] == "Interim Housing"]["Services Name"].value_counts().to_csv("./data/inter_counts.csv")

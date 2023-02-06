@@ -107,7 +107,7 @@ def bin_type_code(row):
         "PH - Housing with Services (no disability required for entry)",
         "PH - Permanent Supportive Housing (disability required for entry)",
     }
-    services_set = {
+    basic_set = {
         "Street Outreach",
         "Coordinated Entry",
         "Homelessness Prevention",
@@ -119,11 +119,11 @@ def bin_type_code(row):
         return "Interim Housing"
     if code in permanent_set:
         return "Permanent Housing"
-    if code in services_set:
-        return "Services"
+    if code in basic_set:
+        return "Basic"
 
 
-def determine_program(row):
+def determine_service_event(row):
     program_set = {
         "Housing & Shelter Services",
         "Housing/Shelter Services",
@@ -131,8 +131,8 @@ def determine_program(row):
         "Transitional Housing/Shelter",
         "Housing Services",
     }
-    out = row["Services Name"] in program_set
+    out = row["Services Name"] not in program_set
 
     if pd.isna(row["Services Name"]):
-        out = True
+        out = False
     return out

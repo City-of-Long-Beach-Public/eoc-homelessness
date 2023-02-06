@@ -67,7 +67,15 @@ clean_df["Clients Veteran Status Cleaned"] = clean_df.apply(
     utils.clean_veteran, axis="columns"
 )
 
-clean_df["is Program Event"] = clean_df.apply(utils.determine_program, axis="columns")
+clean_df["is Service Event"] = clean_df.apply(
+    utils.determine_service_event, axis="columns"
+)
+
+clean_df["Age Group at Project Start"] = pd.cut(
+    clean_df["Entry Screen Age at Project Start"],
+    [0, 17, 24, 61, 200],
+    labels=["0-17", "18-24", "25-61", "62+"],
+)
 
 
 clean_df["Program Outcome"] = clean_df.apply(utils.determine_outcomes, axis="columns")
