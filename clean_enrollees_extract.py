@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-import utils
+import cleaners
 import json
 
 
@@ -43,23 +43,25 @@ clean_df = clean_df.drop(columns=["Date of Birth Date"], errors="ignore")
 # Add Calculations
 
 
-clean_df["Clients Race Cleaned"] = clean_df.apply(utils.clean_race, axis="columns")
+clean_df["Clients Race Cleaned"] = clean_df.apply(cleaners.clean_race, axis="columns")
 
 
 clean_df["Clients Race / Ethnicity"] = clean_df.apply(
-    utils.combine_race_ethnicity, axis="columns"
+    cleaners.combine_race_ethnicity, axis="columns"
 )
 
 
-clean_df["Clients Gender Cleaned"] = clean_df.apply(utils.clean_gender, axis="columns")
+clean_df["Clients Gender Cleaned"] = clean_df.apply(
+    cleaners.clean_gender, axis="columns"
+)
 
 
 clean_df["Clients Veteran Status Cleaned"] = clean_df.apply(
-    utils.clean_veteran, axis="columns"
+    cleaners.clean_veteran, axis="columns"
 )
 
 clean_df["is Service Event"] = clean_df.apply(
-    utils.determine_service_event, axis="columns"
+    cleaners.determine_service_event, axis="columns"
 )
 
 clean_df["Age Group at Project Start"] = pd.cut(
@@ -69,7 +71,9 @@ clean_df["Age Group at Project Start"] = pd.cut(
 )
 
 
-clean_df["Program Outcome"] = clean_df.apply(utils.determine_outcomes, axis="columns")
+clean_df["Program Outcome"] = clean_df.apply(
+    cleaners.determine_outcomes, axis="columns"
+)
 
 clean_df["Program Sites Lat"] = clean_df["Program Sites Full Geolocation"].replace(
     to_replace=",.+", value="", regex=True
@@ -86,7 +90,7 @@ clean_df["Service Long"] = clean_df["Service Geolocation"].replace(
 
 
 clean_df["Programs Project Type Category"] = clean_df.apply(
-    utils.bin_type_code, axis="columns"
+    cleaners.bin_type_code, axis="columns"
 )
 
 
