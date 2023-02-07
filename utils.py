@@ -111,7 +111,7 @@ def bin_type_code(row):
         "PH - Housing with Services (no disability required for entry)",
         "PH - Permanent Supportive Housing (disability required for entry)",
     }
-    basic_set = {
+    support_set = {
         "Street Outreach",
         "Coordinated Entry",
         "Homelessness Prevention",
@@ -123,8 +123,8 @@ def bin_type_code(row):
         return "Interim Housing"
     if code in permanent_set:
         return "Permanent Housing"
-    if code in basic_set:
-        return "Basic"
+    if code in support_set:
+        return "Support Services"
 
 
 def determine_service_event(row):

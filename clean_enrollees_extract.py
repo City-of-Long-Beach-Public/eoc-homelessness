@@ -7,9 +7,11 @@ import json
 
 data_folder = "./data/enrollees_extract"
 
-raw_requirements_filepath =  os.path.abspath(os.path.join(data_folder, "raw_extract_requirements.json"))
-with open(raw_requirements_filepath, "r") as raw_requirements_file:
-    raw_requirements = json.load(raw_requirements_file)
+requirements_filepath = os.path.abspath(
+    os.path.join(data_folder, "raw_extract_requirements.json")
+)
+with open(requirements_filepath, "r") as requirements_file:
+    requirements = json.load(requirements_file)
 
 
 raw_df = pd.DataFrame()
@@ -20,8 +22,8 @@ for filename in os.listdir(data_folder):
         parts_df = pd.read_csv(
             filepath,
             index_col=0,
-            dtype=raw_requirements["types"],
-            parse_dates=raw_requirements["date_columns"],
+            dtype=requirements["types"],
+            parse_dates=requirements["date_columns"],
         )
         raw_df = pd.concat([raw_df, parts_df], ignore_index=True)
 

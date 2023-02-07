@@ -1,13 +1,19 @@
 import os
 import pandas as pd
+import json
 
 data_file = "./data/enrollees_extract.csv"
+
+requirements_filepath = os.path.abspath("./data/enrollees_extract_requirements.json")
+with open(requirements_filepath, "r") as requirements_file:
+    requirements = json.load(requirements_file)
 
 filepath = os.path.abspath(data_file)
 
 df = pd.read_csv(
     filepath,
-    parse_dates=["Enrollments Project Start Date", "Enrollments Exit Date Filter Date"],
+    dtype=requirements["types"],
+    parse_dates=requirements["date_columns"],
     engine="python",
 )
 
@@ -60,7 +66,7 @@ print(pd.unique(df["Program Outcome"]))
 # Should just be logical list
 print(pd.unique(df["is Service Event"]))
 
-# Should only be interim, permanent, and services
+# Should only be interim, permanent, and Support Services
 print(pd.unique(df["Programs Project Type Category"]))
 
 

@@ -1,0 +1,49 @@
+{
+    "types": {
+        "Clients Unique Identifier": "string",
+        "Enrollments Project Start Date": "string",
+        "Programs Project Type Code": "string",
+        "Programs Full Name": "string",
+        "Enrollments Exit Date Filter Date": "string",
+        "Update/Exit Screen Destination": "string",
+        "Update/Exit Screen Destination Category": "string",
+        "Enrollments Days in Project": "Int64",
+        "Clients Current Age": "Int64",
+        "Clients Ethnicity": "string",
+        "Clients Race": "string",
+        "Clients Veteran Status": "string",
+        "Services Name": "string",
+        "Entry Screen Chronically Homeless at Project Start - Individual": "string",
+        "Entry Screen Age at Project Start": "Int64",
+        "Clients Gender": "string",
+        "Program Sites Full Geolocation": "string",
+        "Service Geolocation": "string",
+        "Current Living Situation": "string",
+        "Housing Move-in Date": "string",
+        "American Indian, Alaska Native, or Indigenous": "string",
+        "Asian or Asian American": "string",
+        "Black, African American, or African": "string",
+        "Native Hawaiian or Pacific Islander": "string",
+        "White": "string",
+        "Enrollment ID": "Int64",
+        "Clients Race Cleaned": "string",
+        "Clients Veteran Status Cleaned": "string",
+        "is Service Event": "boolean",
+        "Age Group at Project Start": "string",
+        "Program Outcome": "string",
+        "Program Sites Lat": "string",
+        "Program Sites Long": "string",
+        "Service Lat": "string",
+        "Service Long": "string",
+        "Programs Project Type Category": "string"
+
+    },
+    "date_columns": [
+        "Enrollments Project Start Date",
+        "Enrollments Exit Date Filter Date",
+        "Housing Move-in Date"
+    ],
+    "rename": {
+        
+    }
+}
