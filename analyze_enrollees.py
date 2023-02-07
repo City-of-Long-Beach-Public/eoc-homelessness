@@ -70,9 +70,9 @@ print(pd.unique(df["is Service Event"]))
 print(pd.unique(df["Programs Project Type Category"]))
 
 
-blank_service_names = df[df["Services Name"].isna()]
+# blank_service_names = df[df["Services Name"].isna()]
 
-print(blank_service_names)
+# print(blank_service_names)
 # df[df["Programs Project Type Category"] == "Permanent Housing"]["Services Name"].value_counts().to_csv("./data/perm_counts.csv")
 
 # df[df["Programs Project Type Category"] == "Interim Housing"]["Services Name"].value_counts().to_csv("./data/inter_counts.csv")

@@ -29,8 +29,7 @@
     },
     "date_columns": [
         "Project Start Date",
-        "Exit Date Filter Date",
-        "Housing Move-in Date"
+        "Exit Date Filter Date"
     ],
     "rename": {
         "Unique Identifier": "Clients Unique Identifier",
