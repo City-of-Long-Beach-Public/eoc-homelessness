@@ -69,6 +69,16 @@ print(pd.unique(df["is Service Event"]))
 # Should only be interim, permanent, and Support Services
 print(pd.unique(df["Programs Project Type Category"]))
 
+# Should have enrolled
+print(pd.unique(df["Destination Cleaned"]))
+
+print(pd.unique(df["Destination Category Cleaned"]))
+
+
+# grouped_enroll = df.groupby(["Clients Unique Identifier", "Enrollments Project Start Date", "Programs Full Name"]).size().apply(lambda x: x)
+# grouped_enroll.info()
+
+# grouped_enroll.to_csv("./data/enroll_same_day.csv")
 
 # blank_service_names = df[df["Services Name"].isna()]
 

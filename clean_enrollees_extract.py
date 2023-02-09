@@ -70,6 +70,9 @@ clean_df["Age Group at Project Start"] = pd.cut(
     labels=["0-17", "18-24", "25-61", "62+"],
 )
 
+clean_df[["Destination Cleaned", "Destination Category Cleaned"]] = clean_df.apply(
+    cleaners.clean_destination, axis="columns", result_type="expand"
+)
 
 clean_df["Program Outcome"] = clean_df.apply(
     cleaners.determine_outcomes, axis="columns"

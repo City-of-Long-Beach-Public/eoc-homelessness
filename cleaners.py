@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 
 def clean_race(row):
@@ -140,3 +141,26 @@ def determine_service_event(row):
     if pd.isna(row["Services Name"]):
         out = False
     return out
+
+
+def clean_destination(row):
+    destination = row["Update/Exit Screen Destination"]
+    category = row["Update/Exit Screen Destination Category"]
+
+    if pd.isna(destination) & ~pd.isna(row["Enrollments Exit Date Filter Date"]):
+        if not pd.isna(row["Housing Move-in Date"]):
+            destination = "No exit interview completed"
+            category = "Permanent Housing Situations"
+        else:
+            destination = "No exit interview completed"
+            category = "Other"
+
+    if row["Enrollments Exit Date Filter Date"] == pd.to_datetime(
+        os.getenv("DATE_UPLOADED")
+    ):
+        destination = "Enrolled"
+        category = "Enrolled"
+
+    category = category.replace(" Situations", "")
+
+    return destination, category

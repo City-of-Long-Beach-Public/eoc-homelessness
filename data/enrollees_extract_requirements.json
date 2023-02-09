@@ -30,6 +30,8 @@
         "Clients Veteran Status Cleaned": "string",
         "is Service Event": "boolean",
         "Age Group at Project Start": "string",
+        "Destination Cleaned": "string",
+        "Destination category Cleaned": "string",
         "Program Outcome": "string",
         "Program Sites Lat": "string",
         "Program Sites Long": "string",
