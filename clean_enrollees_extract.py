@@ -78,6 +78,21 @@ clean_df["Program Outcome"] = clean_df.apply(
     cleaners.determine_outcomes, axis="columns"
 )
 
+clean_df[
+    [
+        "Number of Previous Enrollments",
+        "Number of Previous Enrollments (Last Year)",
+        "Days since last Enrollment",
+        "Days since first Enrollment",
+        "Days since first Enrollment (Last Year)",
+    ]
+] = clean_df.apply(
+    cleaners.add_prev_enrollments,
+    axis="columns",
+    result_type="expand",
+    original_df=clean_df,
+)
+
 clean_df["Program Sites Lat"] = clean_df["Program Sites Full Geolocation"].replace(
     to_replace=",.+", value="", regex=True
 )

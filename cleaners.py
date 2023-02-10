@@ -1,6 +1,8 @@
 import pandas as pd
 import os
 
+from datetime import timedelta
+
 
 def clean_race(row):
     out = row["Clients Race"]
@@ -164,3 +166,50 @@ def clean_destination(row):
     category = category.replace(" Situations", "")
 
     return destination, category
+
+def add_prev_enrollments(row, original_df):
+
+    current_date = row["Enrollments Project Start Date"]
+    df = original_df[
+        original_df["Clients Unique Identifier"] == row["Clients Unique Identifier"]
+    ]
+
+    prev_df = df[df["Enrollments Project Start Date"] < current_date]
+
+    prev_within_year_df = prev_df[
+        prev_df["Enrollments Project Start Date"] > (current_date - timedelta(days=365))
+    ]
+
+    prev_enrollments = prev_df.groupby(["Enrollment ID"])[
+        "Enrollments Project Start Date"
+    ].first()
+
+    prev_enrollments_last_year = prev_within_year_df.groupby(["Enrollment ID"])[
+        "Enrollments Project Start Date"
+    ].first()
+    if prev_enrollments.empty:
+        prev_enrollments_counts = 0
+        days_last_enroll = None
+        days_first_enroll = None
+
+    else:
+        prev_enrollments_counts = prev_enrollments.size
+        days_last_enroll = (current_date - prev_enrollments.max()).days
+        days_first_enroll = (current_date - prev_enrollments.min()).days
+
+    if prev_enrollments_last_year.empty:
+        prev_enrollments_last_year_counts = 0
+        days_first_enroll_last_year = None
+    else:
+        prev_enrollments_last_year_counts = prev_enrollments_last_year.size
+        days_first_enroll_last_year = (
+            current_date - prev_enrollments_last_year.min()
+        ).days
+
+    return (
+        prev_enrollments_counts,
+        prev_enrollments_last_year_counts,
+        days_last_enroll,
+        days_first_enroll,
+        days_first_enroll_last_year,
+    )

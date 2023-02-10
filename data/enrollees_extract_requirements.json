@@ -33,12 +33,16 @@
         "Destination Cleaned": "string",
         "Destination category Cleaned": "string",
         "Program Outcome": "string",
+        "Number of Previous Enrollments": "Int64",
+        "Number of Previous Enrollments (Last Year)": "Int64",
+        "Days since last Enrollment": "Int64",
+        "Days since first Enrollment": "Int64",
+        "Days since first Enrollment (Last Year)": "Int64",
         "Program Sites Lat": "string",
         "Program Sites Long": "string",
         "Service Lat": "string",
         "Service Long": "string",
         "Programs Project Type Category": "string"
-
     },
     "date_columns": [
         "Enrollments Project Start Date",

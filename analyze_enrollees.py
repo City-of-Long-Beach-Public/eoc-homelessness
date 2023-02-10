@@ -74,6 +74,17 @@ print(pd.unique(df["Destination Cleaned"]))
 
 print(pd.unique(df["Destination Category Cleaned"]))
 
+# Should be less than 365
+print((df["Days since first Enrollment (Last Year)"].max()))
+
+diff_in_enrolls = (
+    df["Number of Previous Enrollments"]
+    - df["Number of Previous Enrollments (Last Year)"]
+)
+
+# Should be more values than a singular 0
+print(pd.unique(diff_in_enrolls))
+
 
 # grouped_enroll = df.groupby(["Clients Unique Identifier", "Enrollments Project Start Date", "Programs Full Name"]).size().apply(lambda x: x)
 # grouped_enroll.info()
