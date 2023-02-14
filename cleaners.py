@@ -167,8 +167,8 @@ def clean_destination(row):
 
     return destination, category
 
-def add_prev_enrollments(row, original_df):
 
+def add_prev_enrollments(row, original_df):
     current_date = row["Enrollments Project Start Date"]
     df = original_df[
         original_df["Clients Unique Identifier"] == row["Clients Unique Identifier"]

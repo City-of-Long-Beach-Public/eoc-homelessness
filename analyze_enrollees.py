@@ -19,71 +19,24 @@ df = pd.read_csv(
 
 # df.info()
 
-no_code_df = df[~df["Programs Project Type Category"].notna()]
 
-unique_codes = pd.unique(no_code_df["Programs Project Type Code"])
+enroll_time_df = df[df["Programs Project Type Category"] == "Permanent Housing"][
+    df["Enrollments Project Start Date"] > pd.to_datetime("01/01/2021")
+]
 
-print(unique_codes)
+enroll_2021_df = enroll_time_df[
+    enroll_time_df["Enrollments Project Start Date"] < pd.to_datetime("01/01/2022")
+]
+enroll_2022_df = enroll_time_df[
+    enroll_time_df["Enrollments Project Start Date"] > pd.to_datetime("01/01/2022")
+]
 
-safe_haven = df[df["Programs Project Type Category"] == "Safe Haven"]
+enroll_2021_df.info()
+enroll_2022_df.info()
 
-# Should be empty
-print(pd.unique(safe_haven["Programs Full Name"]))
-# Should be Empty
-print(pd.unique(safe_haven["Services Name"]))
-
-
-afro_latino = df.query(
-    "`Clients Ethnicity` == 'Hispanic/Latin(a)(o)(x)' & `Clients Race` == 'Black, African American, or African'"
-)
-
-white_latino = df.query(
-    "`Clients Ethnicity` == 'Hispanic/Latin(a)(o)(x)' & `Clients Race` == 'White'"
-)
-
-# afro_latino.info()
-# Should be 'Black, African American, or African'
-print(pd.unique(afro_latino["Clients Race / Ethnicity"]))
-
-# Should be 'Black, African American, or African'
-print(pd.unique(afro_latino["Clients Race Cleaned"]))
-
-# Should be 'Hispanic/Latin(a)(o)(x)'
-print(pd.unique(white_latino["Clients Race / Ethnicity"]))
-
-# Should be 'White'
-print(pd.unique(white_latino["Clients Race Cleaned"]))
-
-# Should only have 4 groups Male, Female, Other, Unknown
-print(pd.unique(df["Clients Gender Cleaned"]))
-
-# Should only have 3 groups Yes, No, Unknown
-print(pd.unique(df["Clients Veteran Status Cleaned"]))
-
-# Should only have 5 groups Positive, Negative, Permanent, Temporary, Exclude
-print(pd.unique(df["Program Outcome"]))
-
-# Should just be logical list
-print(pd.unique(df["is Service Event"]))
-
-# Should only be interim, permanent, and Support Services
-print(pd.unique(df["Programs Project Type Category"]))
-
-# Should have enrolled
-print(pd.unique(df["Destination Cleaned"]))
-
-print(pd.unique(df["Destination Category Cleaned"]))
-
-# Should be less than 365
-print((df["Days since first Enrollment (Last Year)"].max()))
-
-diff_in_enrolls = (
-    df["Number of Previous Enrollments"]
-    - df["Number of Previous Enrollments (Last Year)"]
-)
-
-# Should be more values than a singular 0
-print(pd.unique(diff_in_enrolls))
+# same_day_enroll = enroll_time_df[pd.isna(enroll_time_df["Days since last Enrollment"])]
+# print(same_day_enroll["Programs Project Type Code"].value_counts(normalize = True))
+# print(enroll_time_df["Programs Project Type Code"].value_counts(normalize = True))
 
 
 # grouped_enroll = df.groupby(["Clients Unique Identifier", "Enrollments Project Start Date", "Programs Full Name"]).size().apply(lambda x: x)

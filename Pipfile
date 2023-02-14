@@ -8,6 +8,7 @@ pandas = "*"
 
 [dev-packages]
 black = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.9"
@@ -16,3 +17,4 @@ python_version = "3.9"
 lint = "black ."
 enrollees = "python clean_enrollees_extract.py"
 analyze = "python analyze_enrollees.py"
+test = "pytest"
