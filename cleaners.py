@@ -137,7 +137,7 @@ def determine_service_event(row):
         "Shelter Services",
         "Transitional Housing/Shelter",
         "Housing Services",
-        "Motel and Hotel Vouchers"
+        "Motel and Hotel Vouchers",
     }
     out = row["Services Name"] not in program_set
 

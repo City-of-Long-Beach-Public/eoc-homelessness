@@ -39,18 +39,21 @@ white_latino = df.query(
 )
 
 
-def test_make_sure_black_precedence():
-    assert (
-        afro_latino["Clients Race / Ethnicity"] == "Black, African American, or African"
-    ).all()
-    assert (
-        afro_latino["Clients Race Cleaned"] == "Black, African American, or African"
-    ).all()
+class TestRaceEthnicity:
+    def test_make_sure_black_precedence(self):
+        assert (
+            afro_latino["Clients Race / Ethnicity"]
+            == "Black, African American, or African"
+        ).all()
+        assert (
+            afro_latino["Clients Race Cleaned"] == "Black, African American, or African"
+        ).all()
 
-
-def test_make_sure_hispanic_precedence():
-    assert (white_latino["Clients Race / Ethnicity"] == "Hispanic/Latin(a)(o)(x)").all()
-    assert (white_latino["Clients Race Cleaned"] == "White").all()
+    def test_make_sure_hispanic_precedence(self):
+        assert (
+            white_latino["Clients Race / Ethnicity"] == "Hispanic/Latin(a)(o)(x)"
+        ).all()
+        assert (white_latino["Clients Race Cleaned"] == "White").all()
 
 
 def test_gender_cleaned():
@@ -70,14 +73,23 @@ def test_veteran_cleaned():
     assert "Unknown" in values
 
 
-def test_program_outcome():
-    values = pd.unique(df["Program Outcome"])
-    assert len(values) == 5
-    assert "Positive" in values
-    assert "Negative" in values
-    assert "Permanent" in values
-    assert "Temporary" in values
-    assert "Exclude" in values
+excluded_permanent_df = df.query(
+    "`Update/Exit Screen Destination` == 'Long-term care facility or nursing home' & `Programs Project Type Category` == 'Permanent Housing'"
+)
+
+
+class TestProgramOutcome:
+    def test_values(self):
+        values = pd.unique(df["Program Outcome"])
+        assert len(values) == 5
+        assert "Positive" in values
+        assert "Negative" in values
+        assert "Permanent" in values
+        assert "Temporary" in values
+        assert "Exclude" in values
+
+    def test_exclude(self):
+        assert (excluded_permanent_df["Program Outcome"] == "Exclude").all()
 
 
 def test_is_service_event():
@@ -89,13 +101,13 @@ def test_destination():
     assert "Enrolled" in pd.unique(df["Destination Category Cleaned"])
 
 
-def test_last_year_calc_is_capped():
-    assert df["Days since first Enrollment (Last Year)"].max() < 366
+class TestPrevEnrollments:
+    def test_last_year_calc_is_capped(self):
+        assert df["Days since first Enrollment (Last Year)"].max() < 366
 
-
-def test_enrollments_last_year_is_less():
-    diff_in_enrolls = (
-        df["Number of Previous Enrollments"]
-        - df["Number of Previous Enrollments (Last Year)"]
-    )
-    assert len(pd.unique(diff_in_enrolls)) > 0
+    def test_enrollments_last_year_is_less(self):
+        diff_in_enrolls = (
+            df["Number of Previous Enrollments"]
+            - df["Number of Previous Enrollments (Last Year)"]
+        )
+        assert len(pd.unique(diff_in_enrolls)) > 0
