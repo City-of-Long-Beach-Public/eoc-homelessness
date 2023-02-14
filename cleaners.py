@@ -137,6 +137,7 @@ def determine_service_event(row):
         "Shelter Services",
         "Transitional Housing/Shelter",
         "Housing Services",
+        "Motel and Hotel Vouchers"
     }
     out = row["Services Name"] not in program_set
 
@@ -189,8 +190,8 @@ def add_prev_enrollments(row, original_df):
     ].first()
     if prev_enrollments.empty:
         prev_enrollments_counts = 0
-        days_last_enroll = None
-        days_first_enroll = None
+        days_last_enroll = 0
+        days_first_enroll = 0
 
     else:
         prev_enrollments_counts = prev_enrollments.size
@@ -199,7 +200,7 @@ def add_prev_enrollments(row, original_df):
 
     if prev_enrollments_last_year.empty:
         prev_enrollments_last_year_counts = 0
-        days_first_enroll_last_year = None
+        days_first_enroll_last_year = 0
     else:
         prev_enrollments_last_year_counts = prev_enrollments_last_year.size
         days_first_enroll_last_year = (
