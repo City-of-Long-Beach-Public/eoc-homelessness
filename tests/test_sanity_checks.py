@@ -96,9 +96,31 @@ def test_is_service_event():
     assert df["is Service Event"].dtype.name == "boolean"
 
 
-def test_destination():
-    assert "Enrolled" in pd.unique(df["Destination Cleaned"])
-    assert "Enrolled" in pd.unique(df["Destination Category Cleaned"])
+class TestDestination:
+    def test_enroll_exists(self):
+        assert "Enrolled" in pd.unique(df["Destination Cleaned"])
+        assert "Enrolled" in pd.unique(df["Destination Category Cleaned"])
+
+    def test_no_nulls(self):
+        assert (~pd.isna(df["Destination Cleaned"])).all()
+        assert (~pd.isna(df["Destination Category Cleaned"])).all()
+
+
+moved_in_df = df[~pd.isna(df["Housing Move-in Date"])]
+
+
+class TestMoveIn:
+    def test_has_destination_if_no_exit(self):
+        no_dest_df = moved_in_df[
+            ~pd.isna(moved_in_df["Update/Exit Screen Destination"])
+        ]
+        assert (
+            no_dest_df["Destination Cleaned"] == "No Exit interview completed"
+        ).all()
+        assert (no_dest_df["Destination Category Cleaned"] == "Permanent Housing").all()
+
+    def test_outcome(self):
+        assert (moved_in_df["Program Outcome"] == "Permanent").all()
 
 
 class TestPrevEnrollments:
