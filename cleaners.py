@@ -101,6 +101,8 @@ def determine_outcomes(row):
 
     if not pd.isna(row["Housing Move-in Date"]):
         out = "Permanent"
+    elif row["Destination Cleaned"] == "Enrolled":
+        out = "Exclude"
     return out
 
 
