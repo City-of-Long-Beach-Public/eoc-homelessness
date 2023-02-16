@@ -5,6 +5,7 @@
         "Project Type Code": "string",
         "Full Name": "string",
         "Exit Date Filter Date": "string",
+        "Active in Project": "string",
         "Destination": "string",
         "Destination Category": "string",
         "Days in Project": "Int64",

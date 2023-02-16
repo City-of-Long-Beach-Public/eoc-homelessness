@@ -1,5 +1,4 @@
 import pandas as pd
-import os
 
 from datetime import timedelta
 
@@ -31,10 +30,8 @@ def clean_gender(row):
     }
     unknown_set = {"Client doesn't know", "Client refused", "Data not collected"}
     out = row["Clients Gender"]
-    if out in other_set:
+    if (out in other_set) | (out in unknown_set):
         out = "Other"
-    if out in unknown_set:
-        out = "Unknown"
     return out
 
 
@@ -42,7 +39,7 @@ def clean_veteran(row):
     unknown_set = {"Client doesn't know", "Client refused", "Data not collected"}
     out = row["Clients Veteran Status"]
     if (out in unknown_set) | (pd.isna(out)):
-        out = "Unknown"
+        out = "No"
     return out
 
 
@@ -102,6 +99,8 @@ def determine_outcomes(row):
 
     if not pd.isna(row["Housing Move-in Date"]):
         out = "Permanent"
+    elif row["Destination Cleaned"] == "Enrolled":
+        out = "Exclude"
     return out
 
 
@@ -158,9 +157,7 @@ def clean_destination(row):
             destination = "No exit interview completed"
             category = "Other"
 
-    if row["Enrollments Exit Date Filter Date"] == pd.to_datetime(
-        os.getenv("DATE_UPLOADED")
-    ):
+    if row["Active in Project"] == "Yes":
         destination = "Enrolled"
         category = "Enrolled"
 
