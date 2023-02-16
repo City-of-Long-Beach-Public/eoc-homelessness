@@ -5,6 +5,7 @@
         "Programs Project Type Code": "string",
         "Programs Full Name": "string",
         "Enrollments Exit Date Filter Date": "string",
+        "Active in Project": "string",
         "Update/Exit Screen Destination": "string",
         "Update/Exit Screen Destination Category": "string",
         "Enrollments Days in Project": "Int64",

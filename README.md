@@ -8,11 +8,7 @@ pipenv install
 
 1. From the Sharepoint folder grab the new files per year and put it in the "data/enrollees_extract" Folder
 
-2. Copy the .env-template file and save it as .env
-
-3. Fill out the .env file
-
-4. Run 
+2. Run 
 ```
 pipenv run enrollees
 ```

@@ -1,5 +1,4 @@
 import pandas as pd
-import os
 
 from datetime import timedelta
 
@@ -158,9 +157,7 @@ def clean_destination(row):
             destination = "No exit interview completed"
             category = "Other"
 
-    if row["Enrollments Exit Date Filter Date"] == pd.to_datetime(
-        os.getenv("DATE_UPLOADED")
-    ):
+    if row["Active in Project"] == "Yes":
         destination = "Enrolled"
         category = "Enrolled"
 
