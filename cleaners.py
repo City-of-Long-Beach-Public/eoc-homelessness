@@ -30,10 +30,8 @@ def clean_gender(row):
     }
     unknown_set = {"Client doesn't know", "Client refused", "Data not collected"}
     out = row["Clients Gender"]
-    if out in other_set:
+    if out in other_set | out in unknown_set:
         out = "Other"
-    if out in unknown_set:
-        out = "Unknown"
     return out
 
 
@@ -41,7 +39,7 @@ def clean_veteran(row):
     unknown_set = {"Client doesn't know", "Client refused", "Data not collected"}
     out = row["Clients Veteran Status"]
     if (out in unknown_set) | (pd.isna(out)):
-        out = "Unknown"
+        out = "No"
     return out
 
 

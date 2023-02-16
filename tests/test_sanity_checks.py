@@ -58,19 +58,17 @@ class TestRaceEthnicity:
 
 def test_gender_cleaned():
     values = pd.unique(df["Clients Gender Cleaned"])
-    assert len(values) == 4
+    assert len(values) == 3
     assert "Male" in values
     assert "Female" in values
     assert "Other" in values
-    assert "Unknown" in values
 
 
 def test_veteran_cleaned():
     values = pd.unique(df["Clients Veteran Status Cleaned"])
-    assert len(values) == 3
+    assert len(values) == 2
     assert "Yes" in values
     assert "No" in values
-    assert "Unknown" in values
 
 
 excluded_permanent_df = df.query(
