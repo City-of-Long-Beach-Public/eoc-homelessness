@@ -30,7 +30,7 @@ def clean_gender(row):
     }
     unknown_set = {"Client doesn't know", "Client refused", "Data not collected"}
     out = row["Clients Gender"]
-    if out in other_set | out in unknown_set:
+    if (out in other_set) | (out in unknown_set):
         out = "Other"
     return out
 
