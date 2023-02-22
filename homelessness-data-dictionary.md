@@ -1,5 +1,5 @@
 # City of Long Beach Efforts to End Homelessness Data Dictionary
-This document defines the data and formulas used to power the City of Long Beach homelessness dashboard hosted at [insert link here](https://longbeach.gov "insert link here"). 
+This document describes the visualizations and associated calculation methods found on the City of Long Beach homelessness dashboard [insert link here](https://longbeach.gov "insert link here"). Additional terms and information can also be found via the [City's Resources page](https://www.longbeach.gov/homelessness/resources/).
 
 ## Definitions
 |  Term | Definition  |
