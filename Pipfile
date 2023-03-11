@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 pandas = "*"
+openpyxl = "*"
 
 [dev-packages]
 black = "*"
@@ -18,3 +19,4 @@ lint = "black ."
 enrollees = "python clean_enrollees_extract.py"
 analyze = "python analyze_enrollees.py"
 test = "pytest"
+outreach = "python clean_outreach.py"

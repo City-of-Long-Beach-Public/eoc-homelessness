@@ -1,0 +1,28 @@
+{
+    "types": {
+        "OutreachRequests_Id": "string",
+        "DateOfRequest": "string",
+        "RequestType": "string",
+        "WhenDidTheRequestingPartyCallIfEmailWhenDidHomelessServicesReceiveTheCall": "string",
+        "WhatTypeOfIssueIsThis": "string",
+        "CouncilDistrict": "string",
+        "OutcomeOfOutreachCallbackDateOutreachWasConductedOfPEHDidPEHAcceptdenyEtc": "string",
+        "AnyUpdates": "string",
+        "Outcome": "string"
+    },
+    "date_columns": [
+        "DateOfRequest",
+        "WhenDidTheRequestingPartyCallIfEmailWhenDidHomelessServicesReceiveTheCall"
+    ],
+    "rename": {
+        "OutreachRequests_Id": "id",
+        "DateOfRequest": "end_date",
+        "RequestType": "request_method",
+        "WhenDidTheRequestingPartyCallIfEmailWhenDidHomelessServicesReceiveTheCall": "start_date",
+        "WhatTypeOfIssueIsThis": "types",
+        "CouncilDistrict": "council_districts",
+        "OutcomeOfOutreachCallbackDateOutreachWasConductedOfPEHDidPEHAcceptdenyEtc": "notes_1",
+        "AnyUpdates": "notes_2",
+        "Outcome": "notes_outcome"
+    }
+}
