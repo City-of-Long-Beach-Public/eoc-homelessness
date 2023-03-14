@@ -1,5 +1,5 @@
 # City of Long Beach is All In on Addressing Homelessness Data Dictionary
-This document describes the visualizations and associated calculation methods found on the City of Long Beach homelessness dashboard [insert link here](https://longbeach.gov "insert link here"). Additional terms and information can also be found via the [City's Resources page](https://www.longbeach.gov/homelessness/resources/).
+This document describes the visualizations and associated calculation methods found on the City of Long Beach [homelessness dashboard](https://app.powerbigov.us/view?r=eyJrIjoiOWRhYzUyYWUtZmVlZS00Njg3LTkwODQtYTgwOWNhZWE1NGE5IiwidCI6IjMxM2YxMWMzLTQyNjgtNGY2YS04ZDNiLWM3ZTY1MDE4M2U3OCJ9&pageName=ReportSection1347eb70ddcce3ac5ad0 "homelessness dashboard"). Additional terms and information can also be found via the [City's Resources page](https://www.longbeach.gov/homelessness/resources/).
 
 ## Definitions
 |  Term | Definition  |
