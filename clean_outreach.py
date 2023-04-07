@@ -6,7 +6,7 @@ import json
 
 data_folder = os.path.join(os.path.dirname(__file__), "data", "outreach_extract")
 
-data_filename = "Outreach Call Data.xlsx"
+data_filename = "Outreach Requests.xlsx"
 
 
 requirements_filepath = os.path.abspath(
