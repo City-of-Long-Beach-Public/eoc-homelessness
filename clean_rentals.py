@@ -64,9 +64,7 @@ rentals = rentals.rename(
     errors="raise",
 )
 
-rentals = rentals[rentals["denial_reason"] != "Testing/Training"][
-    rentals["denial_reason"] != "Duplicate"
-]
+rentals = rentals.query('denial_reason != ["Testing/Training", "Duplicate"]')
 
 phone_codes, uniques = pd.factorize(rentals["client_id"])
 name_codes, uniques = pd.factorize(rentals["client_name"])
