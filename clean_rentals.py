@@ -22,6 +22,7 @@ rentals = pd.read_excel(
     usecols=requirements["types"].keys(),
 )
 
+
 def HMISify_race(row):
     race_dict = {
         "Black or African American": "Black, African American, or African",
@@ -31,7 +32,7 @@ def HMISify_race(row):
         "Asian": "Asian or Asian American",
         "Other": "Unknown",
         "Decline to Answer": "Unknown",
-        "White": "White"
+        "White": "White",
     }
     return race_dict.get(row["race"], "Unknown")
 
@@ -41,6 +42,7 @@ def clean_gender(row):
     if pd.isna(out) | ((out != "Female") & (out != "Male")):
         out = "Gender Expansive or Declined"
     return out
+
 
 def combine_race_ethnicity(row):
     out = row["cleaned_race"]
@@ -62,21 +64,31 @@ rentals = rentals.rename(
     errors="raise",
 )
 
-rentals["cleaned_race"] = rentals.apply(
-    HMISify_race, axis="columns"
+rentals = rentals[rentals["denial_reason"] != "Testing/Training"][
+    rentals["denial_reason"] != "Duplicate"
+]
+
+phone_codes, uniques = pd.factorize(rentals["client_id"])
+name_codes, uniques = pd.factorize(rentals["client_name"])
+combined_codes = pd.Series(phone_codes).where(
+    phone_codes != -1, ((name_codes + 1) * -1)
 )
 
-rentals["race_ethnicity"] = rentals.apply(
-    combine_race_ethnicity, axis="columns"
-)
+rentals["client_id"] = combined_codes.array
 
-rentals["cleaned_gender"] = rentals.apply(
-    clean_gender, axis="columns"
-)
+
+rentals = rentals.drop(columns=["client_name"])
+
+rentals["cleaned_race"] = rentals.apply(HMISify_race, axis="columns")
+
+rentals["race_ethnicity"] = rentals.apply(combine_race_ethnicity, axis="columns")
+
+rentals["cleaned_gender"] = rentals.apply(clean_gender, axis="columns")
 rentals["grant_net_total"] = rentals["grant_total"] - rentals["grant_refunded"]
 
-
-
+rentals["days_till_status_change"] = (
+    rentals["date_status"] - rentals["date_submitted"]
+).dt.days
 rentals.info()
 
 rentals.to_csv(

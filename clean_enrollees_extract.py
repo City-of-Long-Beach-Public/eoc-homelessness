@@ -67,7 +67,7 @@ clean_df["is Service Event"] = clean_df.apply(
 clean_df["Age Group at Project Start"] = pd.cut(
     clean_df["Entry Screen Age at Project Start"],
     [0, 17, 24, 34, 44, 54, 64, 74, 200],
-    labels=["0-17", "18-24","25-34", "35-44", "45-54", "55-64", "65-74", "75+"],
+    labels=["0-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75+"],
 )
 
 clean_df[["Destination Cleaned", "Destination Category Cleaned"]] = clean_df.apply(
