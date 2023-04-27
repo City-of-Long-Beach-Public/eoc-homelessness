@@ -20,10 +20,10 @@
         "Total Refunded Amount": "float",
         "Applicant Name": "string",
         "Applicant Phone#": "string",
-        "US Military": "string",
         "Gender": "string",
         "Race": "string",
-        "Ethnicity": "string"
+        "Ethnicity": "string",
+        "Tenant Age": "Int64"
     },
     "date_columns": [
         "Applicant Submitted Date",
@@ -53,9 +53,9 @@
         "Total Refunded Amount": "grant_refunded",
         "Applicant Name": "client_name",
         "Applicant Phone#": "client_id",
-        "US Military": "veteran_status",
         "Gender": "gender",
         "Race": "race",
-        "Ethnicity": "ethnicity"
+        "Ethnicity": "ethnicity",
+        "Tenant Age": "age"
     }
 }

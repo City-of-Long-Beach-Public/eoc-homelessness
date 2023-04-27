@@ -87,6 +87,14 @@ rentals["grant_net_total"] = rentals["grant_total"] - rentals["grant_refunded"]
 rentals["days_till_status_change"] = (
     rentals["date_status"] - rentals["date_submitted"]
 ).dt.days
+
+
+rentals["age_group"] = pd.cut(
+    rentals["age"],
+    [0, 17, 24, 34, 44, 54, 64, 74, 200],
+    labels=["0-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75+"],
+)
+
 rentals.info()
 
 rentals.to_csv(
