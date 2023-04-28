@@ -57,6 +57,22 @@ def combine_race_ethnicity(row):
     return out
 
 
+def determine_completeness(row):
+    out = row["landlord_and_applicant_complete"]
+    if (not pd.isna(row["source_grant_recipient"])) & (not pd.isna(row["source"])):
+        if (row["source"] != "Landlord") & (
+            row["source_grant_recipient"] == "Applicant"
+        ):
+            out = row["applicant_complete"]
+
+    if out == "Yes":
+        out = True
+    else:
+        out = False
+
+    return out
+
+
 # Change Column Names
 
 rentals = rentals.rename(
@@ -68,21 +84,23 @@ rentals = rentals.query('denial_reason != ["Testing/Training", "Duplicate"]')
 
 zip_codes, uniques = pd.factorize(rentals["zip"])
 id_codes, uniques = pd.factorize(rentals["id"])
-combined_codes = pd.Series(zip_codes).where(
-    zip_codes != -1, ((id_codes + 1) * -1)
-)
+combined_codes = pd.Series(zip_codes).where(zip_codes != -1, ((id_codes + 1) * -1))
 
 rentals["client_id"] = combined_codes.array
 
-
 rentals = rentals.drop(columns=["zip"])
+
+rentals["is_complete"] = rentals.apply(determine_completeness, axis="columns")
+
+rentals = rentals.drop(columns=["landlord_and_applicant_complete"])
+rentals = rentals.drop(columns=["applicant_complete"])
+
 
 rentals["cleaned_race"] = rentals.apply(HMISify_race, axis="columns")
 
 rentals["race_ethnicity"] = rentals.apply(combine_race_ethnicity, axis="columns")
 
 rentals["cleaned_gender"] = rentals.apply(clean_gender, axis="columns")
-rentals["grant_net_total"] = rentals["grant_total"] - rentals["grant_refunded"]
 
 rentals["days_till_status_change"] = (
     rentals["date_status"] - rentals["date_submitted"]

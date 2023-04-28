@@ -23,7 +23,10 @@
         "Race": "string",
         "Ethnicity": "string",
         "Tenant Age": "Int64",
-        "Fully Submitted": "string"
+        "Case Submitted": "string",
+        "Fully Submitted": "string",
+        "Source": "string",
+        "Current / Past Rent Payment To": "string"
     },
     "date_columns": [
         "Applicant Submitted Date",
@@ -55,7 +58,10 @@
         "Race": "race",
         "Ethnicity": "ethnicity",
         "Tenant Age": "age",
-        "Fully Submitted": "is_complete",
-        "Zip": "zip"
+        "Case Submitted": "applicant_complete",
+        "Fully Submitted": "landlord_and_applicant_complete",
+        "Zip": "zip",
+        "Source": "source",
+        "Current / Past Rent Payment To": "source_grant_recipient"
     }
 }
