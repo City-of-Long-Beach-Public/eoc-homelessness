@@ -18,12 +18,12 @@
         "Approved Miscellaneous Amount": "float",
         "Total Approved Amount": "float",
         "Total Refunded Amount": "float",
-        "Applicant Name": "string",
-        "Applicant Phone#": "string",
+        "Zip": "string",
         "Gender": "string",
         "Race": "string",
         "Ethnicity": "string",
-        "Tenant Age": "Int64"
+        "Tenant Age": "Int64",
+        "Fully Submitted": "string"
     },
     "date_columns": [
         "Applicant Submitted Date",
@@ -51,11 +51,11 @@
         "Approved Miscellaneous Amount": "grant_misc",
         "Total Approved Amount": "grant_total",
         "Total Refunded Amount": "grant_refunded",
-        "Applicant Name": "client_name",
-        "Applicant Phone#": "client_id",
         "Gender": "gender",
         "Race": "race",
         "Ethnicity": "ethnicity",
-        "Tenant Age": "age"
+        "Tenant Age": "age",
+        "Fully Submitted": "is_complete",
+        "Zip": "zip"
     }
 }

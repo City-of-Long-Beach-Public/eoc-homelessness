@@ -6,7 +6,7 @@ import json
 
 data_folder = os.path.join(os.path.dirname(__file__), "data", "rentals_extract")
 
-data_filename = "4_3_2023_casesummary.xlsx"
+data_filename = "rental_case_summary.xlsx"
 
 
 requirements_filepath = os.path.abspath(
@@ -66,16 +66,16 @@ rentals = rentals.rename(
 
 rentals = rentals.query('denial_reason != ["Testing/Training", "Duplicate"]')
 
-phone_codes, uniques = pd.factorize(rentals["client_id"])
-name_codes, uniques = pd.factorize(rentals["client_name"])
-combined_codes = pd.Series(phone_codes).where(
-    phone_codes != -1, ((name_codes + 1) * -1)
+zip_codes, uniques = pd.factorize(rentals["zip"])
+id_codes, uniques = pd.factorize(rentals["id"])
+combined_codes = pd.Series(zip_codes).where(
+    zip_codes != -1, ((id_codes + 1) * -1)
 )
 
 rentals["client_id"] = combined_codes.array
 
 
-rentals = rentals.drop(columns=["client_name"])
+rentals = rentals.drop(columns=["zip"])
 
 rentals["cleaned_race"] = rentals.apply(HMISify_race, axis="columns")
 
