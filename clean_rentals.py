@@ -86,6 +86,18 @@ def grab_client_demo(row, original_df):
     return (out["race_ethnicity"], out["age_group"], out["cleaned_gender"])
 
 
+def add_internal_paid(row):
+    out = row["status"]
+
+    if (not pd.isna(row["status_2"])) & (not pd.isna(row["status"])):
+        if (row["status_2"] == "Internally Processed") & (
+            row["status"] == "Denied - No Appeal Allowed"
+        ):
+            out = "Paid"
+
+    return out
+
+
 # Change Column Names
 
 rentals = rentals.rename(
@@ -135,6 +147,8 @@ rentals[["client_race_ethnicity", "client_age_group", "client_gender"]] = rental
     result_type="expand",
     original_df=rentals,
 )
+
+rentals["status"] = rentals.apply(add_internal_paid, axis="columns")
 rentals.info()
 
 rentals.to_csv(

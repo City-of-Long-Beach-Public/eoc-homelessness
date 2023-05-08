@@ -27,7 +27,8 @@
         "Case Submitted": "string",
         "Fully Submitted": "string",
         "Source": "string",
-        "Current / Past Rent Payment To": "string"
+        "Current / Past Rent Payment To": "string",
+        "Secondary Status": "string"
     },
     "date_columns": [
         "Applicant Submitted Date",
@@ -64,6 +65,7 @@
         "Tenant Address": "address_1",
         "Address 2": "address_2",
         "Source": "source",
-        "Current / Past Rent Payment To": "source_grant_recipient"
+        "Current / Past Rent Payment To": "source_grant_recipient",
+        "Secondary Status": "status_2"
     }
 }
