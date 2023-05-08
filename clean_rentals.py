@@ -82,13 +82,14 @@ rentals = rentals.rename(
 
 rentals = rentals.query('denial_reason != ["Testing/Training", "Duplicate"]')
 
-zip_codes, uniques = pd.factorize(rentals["zip"])
+addr_codes, uniques = pd.factorize(rentals["address_1"].fillna('') + rentals["address_2"].fillna(''))
 id_codes, uniques = pd.factorize(rentals["id"])
-combined_codes = pd.Series(zip_codes).where(zip_codes != -1, ((id_codes + 1) * -1))
+combined_codes = pd.Series(addr_codes).where(addr_codes != -1, ((id_codes + 1) * -1))
 
 rentals["client_id"] = combined_codes.array
 
-rentals = rentals.drop(columns=["zip"])
+rentals = rentals.drop(columns=["address_1"])
+rentals = rentals.drop(columns=["address_2"])
 
 rentals["is_complete"] = rentals.apply(determine_completeness, axis="columns")
 

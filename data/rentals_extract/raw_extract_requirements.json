@@ -18,7 +18,8 @@
         "Approved Miscellaneous Amount": "float",
         "Total Approved Amount": "float",
         "Total Refunded Amount": "float",
-        "Zip": "string",
+        "Tenant Address": "string",
+        "Address 2": "string",
         "Gender": "string",
         "Race": "string",
         "Ethnicity": "string",
@@ -60,7 +61,8 @@
         "Tenant Age": "age",
         "Case Submitted": "applicant_complete",
         "Fully Submitted": "landlord_and_applicant_complete",
-        "Zip": "zip",
+        "Tenant Address": "address_1",
+        "Address 2": "address_2",
         "Source": "source",
         "Current / Past Rent Payment To": "source_grant_recipient"
     }
