@@ -73,6 +73,19 @@ def determine_completeness(row):
     return out
 
 
+def grab_client_demo(row, original_df):
+    demos = original_df[original_df["client_id"] == row["client_id"]]
+
+    non_landlord = demos[demos["source"] != "Landlord"]
+    if non_landlord.empty:
+        out = demos.iloc[0]
+
+    else:
+        out = non_landlord.iloc[0]
+
+    return (out["race_ethnicity"], out["age_group"], out["cleaned_gender"])
+
+
 # Change Column Names
 
 rentals = rentals.rename(
@@ -82,7 +95,9 @@ rentals = rentals.rename(
 
 rentals = rentals.query('denial_reason != ["Testing/Training", "Duplicate"]')
 
-addr_codes, uniques = pd.factorize(rentals["address_1"].fillna('') + rentals["address_2"].fillna(''))
+addr_codes, uniques = pd.factorize(
+    rentals["address_1"].fillna("") + rentals["address_2"].fillna("")
+)
 id_codes, uniques = pd.factorize(rentals["id"])
 combined_codes = pd.Series(addr_codes).where(addr_codes != -1, ((id_codes + 1) * -1))
 
@@ -114,6 +129,12 @@ rentals["age_group"] = pd.cut(
     labels=["0-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75+"],
 )
 
+rentals[["client_race_ethnicity", "client_age_group", "client_gender"]] = rentals.apply(
+    grab_client_demo,
+    axis="columns",
+    result_type="expand",
+    original_df=rentals,
+)
 rentals.info()
 
 rentals.to_csv(
