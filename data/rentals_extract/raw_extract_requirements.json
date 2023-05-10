@@ -28,7 +28,8 @@
         "Fully Submitted": "string",
         "Source": "string",
         "Current / Past Rent Payment To": "string",
-        "Secondary Status": "string"
+        "Secondary Status": "string",
+        "Auditor Corrected Annual Income Amount": "float"
     },
     "date_columns": [
         "Applicant Submitted Date",
@@ -66,6 +67,7 @@
         "Address 2": "address_2",
         "Source": "source",
         "Current / Past Rent Payment To": "source_grant_recipient",
-        "Secondary Status": "status_2"
+        "Secondary Status": "status_2",
+        "Auditor Corrected Annual Income Amount": "income"
     }
 }

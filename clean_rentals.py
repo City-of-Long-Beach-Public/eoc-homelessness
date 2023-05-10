@@ -141,6 +141,11 @@ rentals["age_group"] = pd.cut(
     labels=["0-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75+"],
 )
 
+rentals["income_group"] = pd.cut(
+    rentals["income"],
+    [-0.1, 10000, 20000, 30000, 50000, 75000, 300000],
+    labels=["0-10K", "10K-20K", "20K-30K", "30K-50K", "50K-75K", "75K+"],
+)
 rentals[["client_race_ethnicity", "client_age_group", "client_gender"]] = rentals.apply(
     grab_client_demo,
     axis="columns",
