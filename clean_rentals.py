@@ -73,6 +73,31 @@ def determine_completeness(row):
     return out
 
 
+def grab_client_demo(row, original_df):
+    demos = original_df[original_df["client_id"] == row["client_id"]]
+
+    non_landlord = demos[demos["source"] != "Landlord"]
+    if non_landlord.empty:
+        out = demos.iloc[0]
+
+    else:
+        out = non_landlord.iloc[0]
+
+    return (out["race_ethnicity"], out["age_group"], out["cleaned_gender"])
+
+
+def add_internal_paid(row):
+    out = row["status"]
+
+    if (not pd.isna(row["status_2"])) & (not pd.isna(row["status"])):
+        if (row["status_2"] == "Internally Processed") & (
+            row["status"] == "Denied - No Appeal Allowed"
+        ):
+            out = "Paid"
+
+    return out
+
+
 # Change Column Names
 
 rentals = rentals.rename(
@@ -82,13 +107,16 @@ rentals = rentals.rename(
 
 rentals = rentals.query('denial_reason != ["Testing/Training", "Duplicate"]')
 
-zip_codes, uniques = pd.factorize(rentals["zip"])
+addr_codes, uniques = pd.factorize(
+    rentals["address_1"].fillna("") + rentals["address_2"].fillna("")
+)
 id_codes, uniques = pd.factorize(rentals["id"])
-combined_codes = pd.Series(zip_codes).where(zip_codes != -1, ((id_codes + 1) * -1))
+combined_codes = pd.Series(addr_codes).where(addr_codes != -1, ((id_codes + 1) * -1))
 
 rentals["client_id"] = combined_codes.array
 
-rentals = rentals.drop(columns=["zip"])
+rentals = rentals.drop(columns=["address_1"])
+rentals = rentals.drop(columns=["address_2"])
 
 rentals["is_complete"] = rentals.apply(determine_completeness, axis="columns")
 
@@ -113,6 +141,19 @@ rentals["age_group"] = pd.cut(
     labels=["0-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75+"],
 )
 
+rentals["income_group"] = pd.cut(
+    rentals["income"],
+    [-0.1, 10000, 20000, 30000, 50000, 75000, 300000],
+    labels=["0-10K", "10K-20K", "20K-30K", "30K-50K", "50K-75K", "75K+"],
+)
+rentals[["client_race_ethnicity", "client_age_group", "client_gender"]] = rentals.apply(
+    grab_client_demo,
+    axis="columns",
+    result_type="expand",
+    original_df=rentals,
+)
+
+rentals["status"] = rentals.apply(add_internal_paid, axis="columns")
 rentals.info()
 
 rentals.to_csv(
