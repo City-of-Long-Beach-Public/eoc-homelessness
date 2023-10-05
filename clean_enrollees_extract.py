@@ -42,6 +42,8 @@ clean_df = clean_df.drop(columns=["Date of Birth Date"], errors="ignore")
 
 # Add Calculations
 
+clean_df["Programs Project Type Code"] = clean_df["Programs Project Type Code"].str.replace('–', '-')
+
 
 clean_df["Clients Race Cleaned"] = clean_df.apply(cleaners.clean_race, axis="columns")
 

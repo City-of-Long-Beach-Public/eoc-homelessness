@@ -106,7 +106,7 @@ def determine_outcomes(row):
 
 def bin_type_code(row):
     code = row["Programs Project Type Code"]
-    interim_set = {"Emergency Shelter", "Transitional Housing", "Safe Haven"}
+    interim_set = {"Emergency Shelter", "Emergency Shelter - Entry Exit", "Emergency Shelter - Night-by-Night", "Transitional Housing", "Safe Haven"}
     permanent_set = {
         "PH - Rapid Re-Housing",
         "PH - Housing Only",
