@@ -19,7 +19,7 @@ df = pd.read_csv(
 
 # df.info()
 
-without_weird_hyphen = df["Programs Project Type Code"].str.replace('–', '-')
+without_weird_hyphen = df["Programs Project Type Code"].str.replace("–", "-")
 
 print(df["Programs Project Type Code"].unique())
 print(without_weird_hyphen.unique())

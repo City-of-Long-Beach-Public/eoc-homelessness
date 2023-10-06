@@ -7,7 +7,12 @@ def clean_race(row):
     out = row["Clients Race"]
     if row["Black, African American, or African"] == "Yes":
         out = "Black, African American, or African"
-    if out in {"Client doesn't know", "Client refused", "Data not collected"}:
+    if out in {
+        "Client doesn't know",
+        "Client refused",
+        "Client prefers not to answer",
+        "Data not collected",
+    }:
         out = "Unknown"
     return out
 
@@ -27,16 +32,38 @@ def clean_gender(row):
         "Questioning",
         "Transgender",
         "A gender other than singularly female or male (e.g., non-binary, genderfluid, agender, culturally specific gender)",
+        "Non-Binary",
+        "Man (Boy, if child), Transgender",
+        "Man (Boy, if child), Non-Binary",
+        "Woman (Girl, if child), Transgender",
+        "Woman (Girl, if child), Non-Binary",
+        "Woman (Girl, if child), Man (Boy, if child)",
     }
-    unknown_set = {"Client doesn't know", "Client refused", "Data not collected"}
+    male_set = {"Man (Boy, if child)"}
+    female_set = {"Woman (Girl, if child)"}
+    unknown_set = {
+        "Client doesn't know",
+        "Client refused",
+        "Data not collected",
+        "Client prefers not to answer",
+    }
     out = row["Clients Gender"]
+    if out in male_set:
+        out = "Male"
+    if out in female_set:
+        out = "Female"
     if (out in other_set) | (out in unknown_set):
         out = "Other"
     return out
 
 
 def clean_veteran(row):
-    unknown_set = {"Client doesn't know", "Client refused", "Data not collected"}
+    unknown_set = {
+        "Client doesn't know",
+        "Client refused",
+        "Data not collected",
+        "Client prefers not to answer",
+    }
     out = row["Clients Veteran Status"]
     if (out in unknown_set) | (pd.isna(out)):
         out = "No"
@@ -106,7 +133,13 @@ def determine_outcomes(row):
 
 def bin_type_code(row):
     code = row["Programs Project Type Code"]
-    interim_set = {"Emergency Shelter", "Emergency Shelter - Entry Exit", "Emergency Shelter - Night-by-Night", "Transitional Housing", "Safe Haven"}
+    interim_set = {
+        "Emergency Shelter",
+        "Emergency Shelter - Entry Exit",
+        "Emergency Shelter - Night-by-Night",
+        "Transitional Housing",
+        "Safe Haven",
+    }
     permanent_set = {
         "PH - Rapid Re-Housing",
         "PH - Housing Only",
