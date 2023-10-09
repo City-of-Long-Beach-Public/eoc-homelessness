@@ -19,20 +19,25 @@ df = pd.read_csv(
 
 # df.info()
 
+without_weird_hyphen = df["Programs Project Type Code"].str.replace("–", "-")
 
-enroll_time_df = df[df["Programs Project Type Category"] == "Permanent Housing"][
-    df["Enrollments Project Start Date"] > pd.to_datetime("01/01/2021")
-]
+print(df["Programs Project Type Code"].unique())
+print(without_weird_hyphen.unique())
 
-enroll_2021_df = enroll_time_df[
-    enroll_time_df["Enrollments Project Start Date"] < pd.to_datetime("01/01/2022")
-]
-enroll_2022_df = enroll_time_df[
-    enroll_time_df["Enrollments Project Start Date"] > pd.to_datetime("01/01/2022")
-]
 
-enroll_2021_df.info()
-enroll_2022_df.info()
+# enroll_time_df = df[df["Programs Project Type Category"] == "Permanent Housing"][
+#     df["Enrollments Project Start Date"] > pd.to_datetime("01/01/2021")
+# ]
+
+# enroll_2021_df = enroll_time_df[
+#     enroll_time_df["Enrollments Project Start Date"] < pd.to_datetime("01/01/2022")
+# ]
+# enroll_2022_df = enroll_time_df[
+#     enroll_time_df["Enrollments Project Start Date"] > pd.to_datetime("01/01/2022")
+# ]
+
+# enroll_2021_df.info()
+# enroll_2022_df.info()
 
 # same_day_enroll = enroll_time_df[pd.isna(enroll_time_df["Days since last Enrollment"])]
 # print(same_day_enroll["Programs Project Type Code"].value_counts(normalize = True))
