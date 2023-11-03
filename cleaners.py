@@ -14,13 +14,22 @@ def clean_race(row):
         "Data not collected",
     }:
         out = "Unknown"
+
+    if pd.isna(out):
+        out = "Unknown"
+
     return out
 
 
 def combine_race_ethnicity(row):
     out = row["Clients Race Cleaned"]
 
-    if (row["Clients Ethnicity"] == "Hispanic/Latin(a)(o)(x)") & (
+    ethnicity = row["Clients Ethnicity"]
+
+    if pd.isna(ethnicity):
+        ethnicity = ""
+
+    if (ethnicity == "Hispanic/Latin(a)(o)(x)") & (
         out != "Black, African American, or African"
     ):
         out = "Hispanic/Latin(a)(o)(x)"
@@ -53,6 +62,8 @@ def clean_gender(row):
     if out in female_set:
         out = "Female"
     if (out in other_set) | (out in unknown_set):
+        out = "Other"
+    if pd.isna(out):
         out = "Other"
     return out
 
