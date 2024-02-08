@@ -16,7 +16,7 @@ with open(requirements_filepath, "r") as requirements_file:
 
 raw_df = pd.DataFrame()
 for filename in os.listdir(data_folder):
-    if "HSB Program Enrollees" in filename:
+    if "EOC_-_Enrollments" in filename:
         filepath = os.path.abspath(os.path.join(data_folder, filename))
 
         parts_df = pd.read_csv(

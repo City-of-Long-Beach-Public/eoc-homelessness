@@ -5,8 +5,6 @@ from datetime import timedelta
 
 def clean_race(row):
     out = row["Clients Race"]
-    if row["Black, African American, or African"] == "Yes":
-        out = "Black, African American, or African"
     if out in {
         "Client doesn't know",
         "Client refused",
