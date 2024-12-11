@@ -30,6 +30,8 @@ outreach = outreach.rename(
     errors="raise",
 )
 
+outreach["end_date"] = outreach["end_date"].dt.date
+
 outreach["is_encampment"] = outreach["types"].str.contains("Encampment")
 
 all_notes = (

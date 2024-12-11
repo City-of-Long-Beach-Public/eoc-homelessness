@@ -1,26 +1,26 @@
 {
     "types": {
         "#": "string",
-        "Date of Input": "string",
+        "Date Submitted": "string",
         "Request Type": "string",
         "When did the Requesting Party call? If email, when did Homeless Services receive the call?": "string",
         "What type of issue is this?": "string",
         "Outcome of Outreach/Callback (Date outreach was conducted, # of PEH, did PEH accept/deny, etc.)": "string",
         "Any updates:": "string",
-        "Outcome": "string"
+        "Outcome ": "string"
     },
     "date_columns": [
-        "Date of Input",
+        "Date Submitted",
         "When did the Requesting Party call? If email, when did Homeless Services receive the call?"
     ],
     "rename": {
         "#": "id",
-        "Date of Input": "end_date",
+        "Date Submitted": "end_date",
         "Request Type": "request_method",
         "When did the Requesting Party call? If email, when did Homeless Services receive the call?": "start_date",
         "What type of issue is this?": "types",
         "Outcome of Outreach/Callback (Date outreach was conducted, # of PEH, did PEH accept/deny, etc.)": "notes_1",
         "Any updates:": "notes_2",
-        "Outcome": "notes_outcome"
+        "Outcome ": "notes_outcome"
     }
 }
